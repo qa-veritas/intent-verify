@@ -1,0 +1,31 @@
+intent: "intent-verify is installed correctly and (optionally) a local index is serving"
+
+checks:
+  # These three verify against this repository, so the example runs
+  # anywhere with no external dependencies.
+  - name: readme present
+    kind: file_exists
+    path: README.md
+
+  - name: package identity
+    kind: file_contains
+    path: pyproject.toml
+    contains: "intent-verify"
+
+  - name: interpreter sane
+    kind: command
+    run: "python3 -c 'print(6 * 7)'"
+    expect_stdout_contains: "42"
+
+  # These touch a live system. With nothing listening they report
+  # INCONCLUSIVE (not FAILED) — you can't conclude a change failed from
+  # a signal you couldn't read.
+  - name: index health responds
+    kind: http_status
+    url: "http://localhost:9200/_cluster/health"
+    expect_status: 200
+
+  - name: transport port open
+    kind: port_open
+    host: localhost
+    port: 9300
