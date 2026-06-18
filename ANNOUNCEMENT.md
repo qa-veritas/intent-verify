@@ -1,31 +1,16 @@
-# LinkedIn announcement — intent-verify
+# LinkedIn announcement — Intent Verify
 
-"It passed" usually means "it didn't error." Those are not the same
-thing, and the gap between them is where outages hide.
+---
 
-`intent-verify` makes verification a declarative, first-class artifact.
-You write *what should be true* — the index responds on 9200, the
-process runs with the new heap, the config contains the new route — and
-the tool checks it and returns a three-valued verdict:
+A change is not done when it's applied. It's done when an observable signal confirms it — and most automation skips that step. Worse, most "it passed" really means "it didn't error," and when a check *can't* read its signal, automation quietly calls that success. That's how you ship a regression with a green checkmark.
 
-- **verified** — the signal was read and matched.
-- **failed** — the signal was read and did not match.
-- **inconclusive** — the signal could *not* be read (command missing,
-  host unreachable). Reported honestly, never silently passed.
+Intent Verify makes verification a first-class, declarative artifact. You write *what should be true* — the service responds on its port, the process runs with the new config — and the tool turns each statement into an observable check and returns a verdict with evidence. The verdict is three-valued: **verified**, **failed**, or **inconclusive**.
 
-That third value is the one most tooling gets wrong. If you can't reach
-the host, you didn't observe a failure — you failed to observe. Folding
-that into "pass" is how a broken deploy gets a green check. `intent-verify`
-keeps it separate, and lets you decide per context whether inconclusive
-should block (strict, for CI) or not.
+That third value is the whole point. You can't conclude a change failed from a signal you couldn't read — and you certainly can't conclude it passed. Honesty about the unreadable is what makes the green ones trustworthy.
 
-The mental model shift: stop writing tests that assert on incidental
-side effects, and start declaring the observable end state you actually
-care about. A change is done when a signal confirms it — so make the
-signal the artifact.
+This is the **Verification** layer of QA Veritas — a platform exploring how AI agents reason about, verify, and operate complex systems. It's the contract that lets an agent *close* a change instead of declaring victory, which is what makes unattended operation safe.
 
-Python, MIT. The intent spec is plain YAML; check kinds are pluggable.
+Repo + write-up in the comments.
 
-Repo: github.com/qa-veritas/intent-verify
-
-#testing #qa #sre #aiengineering #verification
+---
+*First comment:* Repo: github.com/qa-veritas/intent-verify · Platform: github.com/qa-veritas
