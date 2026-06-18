@@ -64,7 +64,7 @@ def _command(check: Check) -> CheckOutcome:
         return CheckOutcome(check.name, FAILED, f"exit {proc.returncode}: {proc.stderr.strip()[:120]}")
     if expect_contains is not None and str(expect_contains) not in proc.stdout:
         return CheckOutcome(check.name, FAILED, f"stdout missing {expect_contains!r}")
-    return CheckOutcome(check.name, VERIFIED, "exit 0" + (f"; stdout matched" if expect_contains else ""))
+    return CheckOutcome(check.name, VERIFIED, "exit 0" + ("; stdout matched" if expect_contains else ""))
 
 
 def _http_status(check: Check) -> CheckOutcome:

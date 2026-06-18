@@ -1,5 +1,7 @@
 # intent-verify
 
+[![ci](https://github.com/qa-veritas/intent-verify/actions/workflows/ci.yml/badge.svg)](https://github.com/qa-veritas/intent-verify/actions/workflows/ci.yml)
+
 **Declare the desired state as intent; let the tool turn it into
 observable checks, run them, and tell you `verified`, `failed`, or
 `inconclusive` — never "probably fine."**
